@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+         body{
+            background-image: linear-gradient(90deg, grey,rgb(201, 82, 82));
+        }
+        #container {
+            margin-top: 50%;
+            margin-left:30%;
+        }
+        .pagination {
+            display: inline-block;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        .pagination a:active {
+            background-color: lightgreen;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .pagination a:hover{
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="select">
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+
+    <script>
+        function centerDiv()
+        {
+            container = document.getElementById("select");
+            container.setAttribute("id", "container");
+        }
+        centerDiv();
+    </script>
+</body>
+
+</html>

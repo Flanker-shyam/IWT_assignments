@@ -1,0 +1,64 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+ul {
+    margin: 40px 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    color:grey;
+    transition: 0.6ms;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+li {
+    display: inline;
+    font-size: 20px;
+    padding-right: 20px;
+}
+
+li:first-child {
+    padding-left: 10px;
+}
+
+.header-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+
+.about {
+    text-align: center;
+}
+
+h1{
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+p1,p2,p3{
+    font-size: 20px;
+}
+
+.contact{
+    text-align: center;
+    font-size: 30px;
+    margin-top:40px;
+    font-weight: bolder;
+}
+
+footer{
+    margin-top:100px;
+    text-align:center;
+    align-items: center;
+}
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body{
+            background-image: linear-gradient(90deg, grey,rgb(201, 82, 82));
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input {
+            height: 40px;
+            width: 40%;
+            margin: 25px 0;
+            border: 4px solid;
+            border-radius: 7px;
+        }
+
+        button {
+            width: 40%;
+            height: 40px;
+            border: 4px solid;
+            border-radius: 10px;
+            background-color: white;
+            color: black;
+        }
+
+        button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Enter Your vector of numbers in the format 1 2 3 4...</h1>
+        <input id="txt-box1" type="text" name="text" placeholder="1 2 3 4 5...">
+        <input id="txt-box2" type="text" name="text" placeholder="1 2 3 4 5...">
+        <button id="product">Dot product</button>
+    </div>
+
+    <script>
+
+        let button1 = document.getElementById("product");
+        let container = document.getElementById("container");
+        button1.onclick = () => {
+
+            let vector1 = [];
+            let vector2 = [];
+
+            let vect1 = document.getElementById("txt-box1").value;
+            let vect2 = document.getElementById("txt-box2").value;
+
+            for (let i = 0; i < vect1.length; i = i + 2) {
+                let ch = vect1[i];
+                ch = Number(ch)
+                vector1.push(ch);
+            }
+            for (let i = 0; i < vect2.length; i = i + 2) {
+                let ch = vect2[i];
+                ch = Number(ch);
+                vector2.push(ch);
+            }
+
+            len1 = vector1.length;
+            len2 = vector2.length;
+
+            let ans = [];
+            for (let i = 0; i < len1 && i < len2; i++) {
+                let num = vector1[i] * vector2[i];
+                try {
+                    if (!isNaN(num)) {
+                        ans.push(num);
+                    }
+                    else {
+                        throw new Error("Cannot perform an operation on a non-numeric value");
+                    }
+                }
+                catch (err) {
+                    let message = err.message;
+                    let box13 = document.createElement("input");
+                    box13.setAttribute("type", "text");
+                    box13.setAttribute("value", message);
+                    container.appendChild(box13)
+                    return;
+                }
+            }
+
+            let box12 = document.createElement("input");
+            box12.setAttribute("type", "text");
+            box12.setAttribute("value", ans);
+            container.appendChild(box12)
+        }
+    </script>
+</body>
+
+</html>

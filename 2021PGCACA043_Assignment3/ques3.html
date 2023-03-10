@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body{
+            background-image: linear-gradient(90deg, grey,rgb(201, 82, 82));
+        }
+        #tables,
+        #o-list,
+        #description, #u-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+            flex-direction: column;
+            font-size: 20px;
+        }
+
+        table,
+        th,
+        td {
+            font-size: 20px;
+            border: 1px solid;
+            width: 50%;
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="tables">
+        <table>
+            <tr>
+                <th colspan="2">Name</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <td>
+                    Shyam
+                </td>
+                <td>Sunder</td>
+                <td rowspan="2">23</td>
+            </tr>
+            <tr>
+                <td>
+                    Divya
+                </td>
+                <td>Negi</td>
+            </tr>
+        </table>
+    </div>
+    <div id="description">
+        <dl>
+            <dt>
+                Shyam Sunder
+            </dt>
+            <dd>
+                A Cyber Security geek
+            </dd>
+            <br>
+            <dt>
+                Divya Sharma
+            </dt>
+            <dd>
+                A backend Developer
+            </dd>
+        </dl>
+    </div>
+    <div id="o-list">
+        <h1>Languages</h1>
+        <ol>
+            <li>Java</li>
+            <li>C++</li>
+            <li>Python</li>
+        </ol>
+    </div>
+    <div id="u-list">
+        <h1>skills</h1>
+        <ul>
+            <li>Reasoning</li>
+            <li>Problem Solving</li>
+            <li>Maths</li>
+        </ul>
+    </div>
+</body>
+
+</html>

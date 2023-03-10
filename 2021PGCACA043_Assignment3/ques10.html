@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <style>
+         body{
+            background-image: linear-gradient(90deg, grey,rgb(201, 82, 82));
+        }
+        #calculator {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #average,
+        #sum,
+        #product,
+        #max,
+        #min {
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            width: 400px;
+            height: 60px;
+            border: 2px solid;
+            border-radius: 5px;
+        }
+
+        button {
+            height: 40px;
+            width: 200px;
+            border: 2px solid;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="calculator">
+        <h1>Enter Your vector of numbers in format 1 2 3 4...</h1>
+        <input id="nums" type="text" name="number" placeholder="1 2 3 4....">
+        <div id="average">
+            <button id="avg">Average</button>
+        </div>
+        <div id="sum">
+            <button id="total">Sum</button>
+        </div>
+        <div id="product">
+            <button id="mul">Product</button>
+        </div>
+        <div id="max">
+            <button id="maxi">Max</button>
+        </div>
+        <div id="min">
+            <button id="mini">Min</button>
+        </div>
+    </div>
+
+    <script>
+
+        const average = document.getElementById("avg");
+        let sum = document.getElementById("total");
+        let product = document.getElementById("mul");
+        let max = document.getElementById("maxi");
+        let min = document.getElementById("mini");
+
+        const box1 = document.getElementById("average");
+        let box2 = document.getElementById("sum");
+        let box3 = document.getElementById("product");
+        let box4 = document.getElementById("max");
+        let box5 = document.getElementById("min");
+
+        average.onclick = () => {
+            let arr = [];
+            let numbers = document.getElementById("nums").value;
+            for (let i = 0; i < numbers.length; i = i + 2) {
+                let ch = numbers[i];
+                ch = Number(ch)
+                arr.push(ch);
+            }
+            let ans1 = arr.reduce((num, totalSum) => {
+                return totalSum + num / arr.length;
+            })
+
+            let box11 = document.createElement("input");
+            box11.setAttribute("type", "text");
+            box11.setAttribute("value", ans1);
+            box1.appendChild(box11)
+        }
+
+        sum.onclick = () => {
+            let arr = [];
+            let numbers = document.getElementById("nums").value;
+            for (let i = 0; i < numbers.length; i = i + 2) {
+                let ch = numbers[i];
+                ch = Number(ch)
+                arr.push(ch);
+            }
+            let ans1 = arr.reduce((num, totalSum) => {
+                return totalSum + num;
+            })
+
+            let box12 = document.createElement("input");
+            box12.setAttribute("type", "text");
+            box12.setAttribute("value", ans1);
+            box2.appendChild(box12)
+        }
+
+        product.onclick = () => {
+            let arr = [];
+            let numbers = document.getElementById("nums").value;
+            for (let i = 0; i < numbers.length; i = i + 2) {
+                let ch = numbers[i];
+                ch = Number(ch)
+                arr.push(ch);
+            }
+            let ans1 = arr.reduce((num, prod) => {
+                return prod * num;
+            })
+
+            let box13 = document.createElement("input");
+            box13.setAttribute("type", "text");
+            box13.setAttribute("value", ans1);
+            box3.appendChild(box13)
+        }
+        max.onclick = () => {
+            let arr = [];
+            let numbers = document.getElementById("nums").value;
+            for (let i = 0; i < numbers.length; i = i + 2) {
+                let ch = numbers[i];
+                ch = Number(ch)
+                arr.push(ch);
+            }
+            let ans1 = arr.reduce((num, maxii) => {
+                return maxii > num ? maxii : num;
+            })
+
+            let box14 = document.createElement("input");
+            box14.setAttribute("type", "text");
+            box14.setAttribute("value", ans1);
+            box4.appendChild(box14)
+        }
+
+        min.onclick = () => {
+            let arr = [];
+            let numbers = document.getElementById("nums").value;
+            for (let i = 0; i < numbers.length; i = i + 2) {
+                let ch = numbers[i];
+                ch = Number(ch)
+                arr.push(ch);
+            }
+            let ans1 = arr.reduce((num, minii) => {
+                return minii < num ? minii : num;
+            })
+
+            let box15 = document.createElement("input");
+            box15.setAttribute("type", "text");
+            box15.setAttribute("value", ans1);
+            box15.setAttribute("value", ans1);
+            box5.appendChild(box15)
+        }
+    </script>
+</body>
+
+</html>
