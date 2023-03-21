@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        input {
+            width: 400px;
+            height: 40px;
+            font-size: 20px;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col-6">
+                <form id="form">
+                    <label>username</label><br>
+                    <input for="name" type="text" required placeholder="username"><br>
+                    <label>email</label><br>
+                    <input for="email" type="email" required placeholder="example@gmail.com"><br>
+                    <label>password</label><br>
+                    <input for="password" id="password" type="password" required placeholder="*******"><br>
+                    <p id="error1" style="font-size:14px; color:red;"></p>
+                    <label>confirm password</label><br>
+                    <input for="password" id="rePassword" type="text" required placeholder="******"><br>
+                    <p id="error2" style="font-size:14px; color:red;"></p>
+                    <label>Date of birth</label><br>
+                    <input for="DOB" id="dob" type="date" required placeholder="dd-mm-yyyy"><br>
+
+                    <button id="button" type="submit">Submit</button>
+                    <button id="button" type="reset">clear</button>
+                    <h3 id="success" style="color:rgb(54, 138, 54); margin-top:30px;"></h3>
+                </form>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let button = document.getElementById("button");
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let password = document.getElementById("password").value;
+            let rePassword = document.getElementById("rePassword").value;
+
+            var pattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
+
+            if (password != rePassword) {
+                document.getElementById("error2").innerHTML = "password doesn't match";
+                return;
+            }
+            else {
+                document.getElementById("error2").innerHTML = "";
+            }
+            if (pattern.test(password)) {
+                document.getElementById("error1").innerHTML = "";
+            }
+            else {
+                document.getElementById("error1").innerHTML = "password should contain atleast 1 uppercase, 1 lowecase, 1 digit, and it should be of minimum length 8";
+                return;
+            }
+
+            document.getElementById("success").innerHTML = "Registration Successful !!";
+        })
+    </script>
+</body>
+
+</html>

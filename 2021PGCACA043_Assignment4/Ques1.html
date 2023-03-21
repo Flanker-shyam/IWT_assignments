@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        #calculator {
+            margin-top: 200px;
+            width: 100%;
+        }
+
+        input {
+            height: 50px;
+            width: 400px;
+            border-radius: 8px;
+            border: 3px solid black;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        #digits {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: -10px;
+            justify-content: space-between;
+            width: 400px;
+        }
+
+        button {
+            height: 40px;
+            width: 40px;
+            margin: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col-6">
+                <div id="calculator">
+                    <input id="box" type="text" name="nums" autocomplete="off">
+                    <div id="digits">
+                        <button id="one">1</button>
+                        <button id="two">2</button>
+                        <button id="three">3</button>
+                        <button id="four">4</button>
+                        <button id="five">5</button>
+                        <button id="six">6</button>
+                        <button id="seven">7</button>
+                        <button id="eight">8</button>
+                        <button id="nine">9</button>
+                        <button id="zero">0</button>
+                    </div>
+                    <div id="buttons">
+                        <button id="sum">+</button>
+                        <button id="sub">-</button>
+                        <button id="prod">x</button>
+                        <button id="div">/</button>
+                    </div>
+                    <div id="equal">
+                        <button style="width:100px" id="cal">=</button>
+                        <button style="width:100px" id="clear">clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let box = document.getElementById("box");
+
+        let numString = "";
+        const btns = document.querySelectorAll('button');
+        btns.forEach(btn => {
+            btn.onclick = () => {
+                let text = btn.innerHTML;
+                if (text != '=') {
+                    numString += text;
+                    box.value = numString;
+                }
+            }
+        })
+
+        let equal = document.getElementById("cal");
+        equal.onclick = () => {
+            let len = numString.length;
+
+            let operators = new Set();
+            operators.add('+');
+            operators.add('-');
+            operators.add('x');
+            operators.add('/');
+
+            if (numString[0] === '+' || numString[0] === '-' ||
+                numString[0] === 'x' || numString[0] === '/') {
+                box.value = "syntax error!";
+                return;
+            }
+            if (numString[len - 1] === '+' || numString[len - 1] === '-' ||
+                numString[len - 1] === 'x' || numString[len - 1] === '/') {
+                box.value = "syntax error!";
+                return;
+            }
+            try {
+                let ans = 0;
+                let num = 0;
+                let final = 0;
+
+                numString = numString.split('');
+                for (let i = 0; i < len - 2; i += 2) {
+                    if ((operators.has(numString[i]) && operators.has(numString[i + 1])) ||
+                        (operators.has(numString[i + 1]) && operators.has(numString[i + 2]))) {
+                        throw new Error("syntax Error");
+                    }
+
+                    if (numString[i + 1] == '+') {
+                        let num = Number(numString[i]) + Number(numString[i + 2]);
+                        if (isNaN(num)) {
+                            throw new Error("syntax Error");
+                        }
+                        numString[i + 2] = num;
+                    }
+                    else if (numString[i + 1] == '-') {
+                        console.log("in -")
+                        let num = Number(numString[i]) - Number(numString[i + 2]);
+                        if (isNaN(num)) {
+                            throw new Error("syntax Error");
+                        }
+                        numString[i + 2] = num;
+                    }
+                    else if (numString[i + 1] == 'x') {
+                        let num = Number(numString[i]) * Number(numString[i + 2]);
+                        if (isNaN(num)) {
+                            throw new Error("syntax Error");
+                        }
+                        numString[i + 2] = num;
+
+                    }
+                    else if (numString[i + 1] == '/') {
+                        let num = Number(numString[i]) / Number(numString[i + 2]);
+                        if (isNaN(num)) {
+                            throw new Error("syntax Error");
+                        }
+                        numString[i + 2] = num;
+                    }
+                    else {
+                        throw new Error("syntax Error");
+                    }
+                    final = numString[numString.length - 1];
+                }
+                box.value = final;
+            }
+            catch (err) {
+                console.log(err);
+                box.value = "syntax error!"
+            }
+
+        }
+
+        let clear = document.getElementById("clear");
+        clear.onclick = () => {
+            numString = "";
+            box.value = numString;
+        }
+
+
+    </script>
+</body>
+
+</html>

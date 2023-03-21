@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        #dropdown {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col-6">
+                <div id="dropdown">
+                    <div>
+                        <label for="item">Item:</label>
+                        <input type="text" id="item">
+                    </div>
+                    <div>
+                        <label for="price">Price:</label>
+                        <input type="number" id="price">
+                    </div>
+                    <button id="addButton">Add</button>
+
+                    <table id="groceryList">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total:</td>
+                                <td id="totalPrice">0</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const itemInput = document.getElementById('item');
+        const priceInput = document.getElementById('price');
+        const addButton = document.getElementById('addButton');
+        const groceryList = document.getElementById('groceryList');
+        const totalPrice = document.getElementById('totalPrice');
+
+        let totalAmount=0;
+
+        let items = [];
+
+        function updateTotal() {
+            let total = 0;
+            items.forEach(item => total += item.price);
+            totalPrice.textContent = total.toFixed(2);
+        }
+
+        function deleteItem(index) {
+            items.splice(index, 1);
+            renderList();
+        }
+
+        function renderList() {
+            groceryList.querySelectorAll('tbody tr').forEach(row => row.remove());
+            items.forEach((item, index) => {
+                const row = document.createElement('tr');
+                const itemCell = document.createElement('td');
+                const priceCell = document.createElement('td');
+                const actionCell = document.createElement('td');
+                const deleteButton = document.createElement('button');
+                itemCell.textContent = item.name;
+                priceCell.textContent = item.price.toFixed(2);
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => deleteItem(index));
+                actionCell.appendChild(deleteButton);
+                row.appendChild(itemCell);
+                row.appendChild(priceCell);
+                row.appendChild(actionCell);
+                groceryList.querySelector('tbody').appendChild(row);
+            });
+            updateTotal();
+        }
+
+        addButton.addEventListener('click', () => {
+            const item = itemInput.value.trim();
+            const price = parseFloat(priceInput.value);
+            if (!item || !price) {
+                return;
+            }
+            items.push({ name: item, price: price });
+            itemInput.value = '';
+            priceInput.value = '';
+            renderList();
+        });
+
+
+    </script>
+</body>
+
+</html>
