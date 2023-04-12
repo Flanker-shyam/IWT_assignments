@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Offline E-commerce Item List</title>
+    <style>
+        .item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .item-image {
+            flex-basis: 30%;
+            margin-right: 20px;
+            height:150px;
+            width: 150px;
+        }
+
+        .item-image img {
+            max-width: 100%;
+        }
+
+        .item-info {
+            flex-basis: 70%;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .item-discounted-price {
+            font-size: 20px;
+            color: red;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #bbb;
+        }
+
+        .pagination button.active {
+            background-color: #555;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Offline E-commerce Item List</h1>
+    <div id="item-list"></div>
+    <div class="pagination"></div>
+
+    <script>
+        const itemList = [
+            {
+                name: 'Item 1',
+                image: 'https://m.media-amazon.com/images/I/81ri8WkNuaL._AC_SX679_.jpg',
+                price: 10,
+                discount: 2
+            },
+            {
+                name: 'Item 2',
+                image: 'https://m.media-amazon.com/images/I/61mpMH5TzkL._AC_SL1500_.jpg',
+                price: 15,
+                discount: 0
+            },
+            {
+                name: 'Item 3',
+                image: 'https://m.media-amazon.com/images/I/61BnR2NE4PL.__AC_SX300_SY300_QL70_FMwebp_.jpg',
+                price: 20,
+                discount: 5
+            },
+            {
+                name: 'Item 4',
+                image: 'https://m.media-amazon.com/images/I/618OqLjol6L._AC_SY879_.jpg',
+                price: 25,
+                discount: 0
+            },
+            {
+                name: 'Item 5',
+                image: 'https://m.media-amazon.com/images/I/71PaUm-U19S._AC_SX466_.jpg',
+                price: 30,
+                discount: 10
+            },
+            {
+                name: 'Item 6',
+                image: 'https://m.media-amazon.com/images/I/61UaZgMiWML.__AC_SX300_SY300_QL70_FMwebp_.jpg',
+                price: 35,
+                discount: 0
+            },
+            {
+                name: 'Item 7',
+                image: 'https://m.media-amazon.com/images/I/61EjNRNwaZL.__AC_SX300_SY300_QL70_FMwebp_.jpg',
+                price: 40,
+                discount: 0
+            },
+            {
+                name: 'Item 8',
+                image: 'https://m.media-amazon.com/images/I/61lCLrCtuhL._AC_SX679_.jpg',
+                price: 45,
+                discount: 15
+            },
+            {
+                name: 'Item 9',
+                image: 'https://m.media-amazon.com/images/I/61e9xf6PKhL._AC_SX466_.jpg',
+                price: 50,
+                discount: 0
+            },
+            {
+                name: 'Item 10',
+                image: 'https://m.media-amazon.com/images/I/51esn88j9zL.__AC_SX300_SY300_QL70_FMwebp_.jpg',
+                price: 55,
+                discount: 0
+            }
+        ];
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+        let totalPages = Math.ceil(itemList.length / itemsPerPage);
+
+        const itemListElem = document.getElementById('item-list');
+        const paginationElem = document.querySelector('.pagination');
+        function showItems(page) {
+            itemListElem.innerHTML = '';
+
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const itemsToDisplay = itemList.slice(startIndex, endIndex);
+
+            for (const item of itemsToDisplay) {
+                const itemElem = document.createElement('div');
+                itemElem.classList.add('item');
+
+                const itemImageElem = document.createElement('div');
+                itemImageElem.classList.add('item-image');
+                const itemImage = document.createElement('img');
+                itemImage.src = item.image;
+                itemImage.style.height="150px";
+                itemImage.style.width="auto";
+                itemImageElem.appendChild(itemImage);
+                itemElem.appendChild(itemImageElem);
+
+                const itemInfoElem = document.createElement('div');
+                itemInfoElem.classList.add('item-info');
+                const itemNameElem = document.createElement('div');
+                itemNameElem.classList.add('item-name');
+                itemNameElem.textContent = item.name;
+                itemInfoElem.appendChild(itemNameElem);
+
+                const itemPriceElem = document.createElement('div');
+                itemPriceElem.classList.add('item-price');
+                itemPriceElem.textContent = `Price: $${item.price}`;
+
+                const itemDiscountedPriceElem = document.createElement('div');
+                itemDiscountedPriceElem.classList.add('item-discounted-price');
+                if (item.discount > 0) {
+                    const discountedPrice = item.price - item.discount;
+                    itemDiscountedPriceElem.textContent = `Discounted Price: $${discountedPrice}`;
+                }
+
+                itemInfoElem.appendChild(itemPriceElem);
+                itemInfoElem.appendChild(itemDiscountedPriceElem);
+                itemElem.appendChild(itemInfoElem);
+
+                itemListElem.appendChild(itemElem);
+            }
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            paginationElem.innerHTML = '';
+
+            if (totalPages > 1) {
+                const previousButton = document.createElement('button');
+                previousButton.textContent = '<';
+                previousButton.disabled = currentPage === 1;
+                previousButton.addEventListener('click', () => {
+                    currentPage--;
+                    showItems(currentPage);
+                });
+                paginationElem.appendChild(previousButton);
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    pageButton.classList.toggle('active', i === currentPage);
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        showItems(currentPage);
+                    });
+                    paginationElem.appendChild(pageButton);
+                }
+
+                const nextButton = document.createElement('button');
+                nextButton.textContent = '>';
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.addEventListener('click', () => {
+                    currentPage++;
+                    showItems(currentPage);
+                });
+                paginationElem.appendChild(nextButton);
+            }
+        }
+
+        showItems(currentPage);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Javascript Quiz</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			margin: 0;
+			padding: 0;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		h1 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		form {
+			margin-bottom: 20px;
+		}
+		.progress-bar {
+			height: 20px;
+			background-color: #ddd;
+			position: relative;
+			margin-bottom: 20px;
+		}
+		.progress {
+			height: 100%;
+			background-color: #4CAF50;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.question {
+			margin-bottom: 20px;
+		}
+		.options {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.options li {
+			margin-bottom: 10px;
+		}
+		.btn {
+			display: block;
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			margin: 0 auto;
+			cursor: pointer;
+		}
+		.btn:hover {
+			background-color: #3e8e41;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Javascript Quiz</h1>
+		<div class="progress-bar">
+			<div class="progress"></div>
+		</div>
+		<form id="quiz-form">
+			<div class="question-container"></div>
+			<button type="submit" class="btn" id="next-btn">Next</button>
+		</form>
+	</div>
+	<script>
+		const quizData = [
+			{
+				question: 'What is the capital of France?',
+				options: ['Paris', 'London', 'Berlin', 'Madrid'],
+				answer: 'Paris'
+			},
+			{
+				question: 'What is the largest country in the world?',
+				options: ['Canada', 'China', 'Russia', 'USA'],
+				answer: 'Russia'
+			},
+			{
+				question: 'What is the currency of Japan?',
+				options: ['Yuan', 'Yen', 'Euro', 'Dollar'],
+				answer: 'Yen'
+			},
+			{
+				question: 'What is the smallest continent in the world?',
+				options: ['Africa', 'Asia', 'Europe', 'Australia'],
+				answer: 'Australia'
+			},
+			{
+				question: 'What is the highest mountain in the world?',
+				options: ['Mount Kilimanjaro', 'Mount Everest', 'Mount McKinley', 'Mount Aconcagua'],
+				answer: 'Mount Everest'
+			},
+			{
+				question: 'What is the largest ocean in the world?',
+				options: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
+				answer: 'Pacific Ocean'
+			},
+			{
+				question: 'What is the capital of India?',
+				options: ['New Delhi', 'Mumbai', 'Bangalore', 'Chennai'],
+				answer: 'New Delhi'
+			},{
+				question: 'What is the currency of Switzerland?',
+				options: ['Swiss franc', 'Euro', 'Dollar', 'Yen'],
+				answer: 'Swiss franc'
+			},
+			{
+				question: 'What is the national language of Brazil?',
+				options: ['Portuguese', 'Spanish', 'English', 'French'],
+				answer: 'Portuguese'
+			}
+		];
+
+		const quizForm = document.getElementById('quiz-form');
+		const questionContainer = document.querySelector('.question-container');
+		const nextBtn = document.getElementById('next-btn');
+		const progress = document.querySelector('.progress');
+		const progressBar = document.querySelector('.progress-bar');
+
+		let currentQuestion = 0;
+		let score = 0;
+
+		// Function to load the question and options
+		function loadQuestion() {
+			const questionData = quizData[currentQuestion];
+			const question = questionData.question;
+			const options = questionData.options;
+
+			// Update question container
+			questionContainer.innerHTML = `
+				<div class="question">${question}</div>
+				<ul class="options">
+					${options.map(option => `<li><input type="radio" name="answer" value="${option}">${option}</li>`).join('')}
+				</ul>
+			`;
+		}
+
+		// Function to update the progress bar
+		function updateProgress() {
+			const progressPercent = (currentQuestion + 1) / quizData.length * 100;
+			progress.style.width = `${progressPercent}%`;
+		}
+
+		// Function to check the answer
+		function checkAnswer() {
+			const selectedOption = document.querySelector('input[name="answer"]:checked');
+			if (!selectedOption) {
+				return false;
+			}
+			return selectedOption.value === quizData[currentQuestion].answer;
+		}
+
+		// Function to handle form submission
+		function submitHandler(e) {
+			e.preventDefault();
+			if (checkAnswer()) {
+				score++;
+			}
+			currentQuestion++;
+			if (currentQuestion < quizData.length) {
+				loadQuestion();
+				updateProgress();
+			} else {
+				alert(`You have answered ${score} out of ${quizData.length} questions correctly!`);
+			}
+		}
+
+		// Event listener for form submission
+		quizForm.addEventListener('submit', submitHandler);
+
+		// Load the first question
+		loadQuestion();
+		updateProgress();
+	</script>
+</body>
+</html>

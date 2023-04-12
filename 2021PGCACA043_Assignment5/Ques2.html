@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tic-Tac-Toe Game</title>
+    <style>
+      .grid {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        font-size: 72px;
+        line-height: 100px;
+        vertical-align: top;
+        border: 1px solid black;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tic-Tac-Toe Game</h1>
+    <div class="grid" id="0"></div>
+    <div class="grid" id="1"></div>
+    <div class="grid" id="2"></div>
+    <br>
+    <div class="grid" id="3"></div>
+    <div class="grid" id="4"></div>
+    <div class="grid" id="5"></div>
+    <br>
+    <div class="grid" id="6"></div>
+    <div class="grid" id="7"></div>
+    <div class="grid" id="8"></div>
+
+    <script>
+      const grids = document.querySelectorAll('.grid');
+      let playerTurn = true; // player always starts first
+      let winner = false;
+
+      grids.forEach(grid => {
+        grid.addEventListener('click', () => {
+          if (!grid.textContent && !winner) { // check if the grid is empty
+            if (playerTurn) {
+              grid.textContent = 'X';
+              checkWin('X');
+              playerTurn = false;
+              computerTurn();
+            } else {
+              grid.textContent = 'O';
+              checkWin('O');
+              playerTurn = true;
+            }
+          }
+        });
+      });
+
+      function computerTurn() {
+        let emptyGrids = [];
+        grids.forEach(grid => {
+          if (!grid.textContent) {
+            emptyGrids.push(grid);
+          }
+        });
+        let randomIndex = Math.floor(Math.random() * emptyGrids.length);
+        emptyGrids[randomIndex].textContent = 'O';
+        checkWin('O');
+        playerTurn = true;
+      }
+
+      function checkWin(symbol) {
+        let winCombos = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6]
+        ];
+        winCombos.forEach(combo => {
+          if (grids[combo[0]].textContent === symbol && 
+              grids[combo[1]].textContent === symbol && 
+              grids[combo[2]].textContent === symbol) {
+            winner = true;
+            alert(`${symbol === 'X' ? 'Player' : 'Computer'} Won!`);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
